@@ -1,0 +1,132 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1775391819498,
+  "projectRoot": "/Users/azrael/.openclaw/workspace/projects/match3-game",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs"
+    ],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 2,
+      "lastAccessed": 1775391819483,
+      "keyFiles": [
+        "PRD.md",
+        "TDD.md"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "src/core/__tests__/GravityEngine.test.ts",
+      "accessCount": 8,
+      "lastAccessed": 1775391943104,
+      "type": "file"
+    },
+    {
+      "path": "src/core/__tests__/MatchDetector.test.ts",
+      "accessCount": 4,
+      "lastAccessed": 1775391949183,
+      "type": "file"
+    },
+    {
+      "path": "vite.config.ts",
+      "accessCount": 2,
+      "lastAccessed": 1775391898974,
+      "type": "file"
+    },
+    {
+      "path": "docs/TDD.md",
+      "accessCount": 1,
+      "lastAccessed": 1775391826400,
+      "type": "file"
+    },
+    {
+      "path": "docs/PRD.md",
+      "accessCount": 1,
+      "lastAccessed": 1775391826463,
+      "type": "file"
+    },
+    {
+      "path": "tsconfig.json",
+      "accessCount": 1,
+      "lastAccessed": 1775391844220,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 1,
+      "lastAccessed": 1775391844719,
+      "type": "file"
+    },
+    {
+      "path": "src/types/index.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391844969,
+      "type": "file"
+    },
+    {
+      "path": "src/core/MatchDetector.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391876277,
+      "type": "file"
+    },
+    {
+      "path": "src/core/GravityEngine.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391892065,
+      "type": "file"
+    },
+    {
+      "path": "src/main.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391962135,
+      "type": "file"
+    },
+    {
+      "path": "src/scenes/GameScene.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391962385,
+      "type": "file"
+    },
+    {
+      "path": "src/vite-env.d.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775391962632,
+      "type": "file"
+    },
+    {
+      "path": "public/vite.svg",
+      "accessCount": 1,
+      "lastAccessed": 1775391962877,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

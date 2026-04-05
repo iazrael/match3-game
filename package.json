@@ -1,0 +1,23 @@
+{
+  "name": "match3-game",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run"
+  },
+  "devDependencies": {
+    "@vitest/ui": "^4.1.2",
+    "typescript": "~5.7.2",
+    "vite": "^6.2.0",
+    "vitest": "^4.1.2"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  }
+}
