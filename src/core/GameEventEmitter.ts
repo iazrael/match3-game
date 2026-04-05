@@ -8,7 +8,7 @@ export class GameEventEmitter {
   /**
    * 注册事件监听器
    */
-  public on(event: string | symbol, fn: Function, context?: unknown): this {
+  public on(event: string | symbol, fn: Function, _context?: unknown): this {
     if (!this.listeners.has(event)) {
       this.listeners.set(event, new Set());
     }
@@ -19,18 +19,18 @@ export class GameEventEmitter {
   /**
    * 注册一次性事件监听器
    */
-  public once(event: string | symbol, fn: Function, context?: unknown): this {
+  public once(event: string | symbol, fn: Function, _context?: unknown): this {
     const onceFn = (...args: unknown[]) => {
       this.off(event, onceFn);
-      fn.apply(context, args);
+      fn.apply(_context, args);
     };
-    return this.on(event, onceFn, context);
+    return this.on(event, onceFn, _context);
   }
 
   /**
    * 移除事件监听器
    */
-  public off(event: string | symbol, fn?: Function, context?: unknown): this {
+  public off(event: string | symbol, fn?: Function, _context?: unknown): this {
     if (!fn) {
       this.listeners.delete(event);
       return this;

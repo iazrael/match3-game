@@ -1,10 +1,10 @@
 import {
   Tile,
-  GridPosition,
   GravityResult,
   TileMovement,
   GRID_SIZE,
   TileType,
+  SpecialType,
 } from '../types';
 
 /**
@@ -55,7 +55,7 @@ export class GravityEngine {
         const endRow = i;
         const newTile: Tile = {
           type: this.getNextTileType(),
-          special: 'none',
+          special: SpecialType.NONE,
           position: { row: endRow, col },
         };
 
@@ -69,14 +69,14 @@ export class GravityEngine {
         });
 
         // 更新网格
-        grid[endRow][col] = newTile;
+        grid[endRow]![col] = newTile;
       }
 
       // 更新现有元素在网格中的位置
       for (let i = 0; i < nonEmptyTiles.length; i++) {
         const tile = nonEmptyTiles[i]!;
         const newRow = GRID_SIZE - nonEmptyTiles.length + i;
-        grid[newRow][col] = tile;
+        grid[newRow]![col] = tile;
       }
     }
 
@@ -89,7 +89,8 @@ export class GravityEngine {
   public extractColumn(grid: (Tile | null)[][], colIndex: number): (Tile | null)[] {
     const column: (Tile | null)[] = [];
     for (let row = 0; row < GRID_SIZE; row++) {
-      column.push(grid[row][colIndex]);
+      const tile = grid[row]![colIndex];
+      column.push(tile === undefined ? null : tile);
     }
     return column;
   }

@@ -1,17 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { MatchDetector } from '../MatchDetector';
-import { Tile, TileType, GRID_SIZE } from '../../types';
+import { Tile, TileType, SpecialType } from '../../types';
 
 describe('MatchDetector', () => {
   const createTestGrid = (layout: (TileType | null)[][]): Tile[][] => {
     const grid: Tile[][] = [];
     for (let row = 0; row < layout.length; row++) {
       grid[row] = [];
-      for (let col = 0; col < layout[row].length; col++) {
-        const type = layout[row][col];
-        grid[row][col] = type !== null
-          ? { type, special: 'none', position: { row, col } }
-          : null as unknown as Tile;
+      for (let col = 0; col < layout[row]!.length; col++) {
+        const type = layout[row]![col];
+        if (type !== null) {
+          grid[row]![col] = { type: type as TileType, special: SpecialType.NONE, position: { row, col } };
+        } else {
+          grid[row]![col] = null as unknown as Tile;
+        }
       }
     }
     return grid;
@@ -32,10 +34,10 @@ describe('MatchDetector', () => {
       const matches = detector.findAllMatches(grid);
 
       expect(matches).toHaveLength(1);
-      expect(matches[0].direction).toBe('horizontal');
-      expect(matches[0].length).toBe(3);
-      expect(matches[0].startPos).toEqual({ row: 0, col: 0 });
-      expect(matches[0].endPos).toEqual({ row: 0, col: 2 });
+      expect(matches[0]!.direction).toBe('horizontal');
+      expect(matches[0]!.length).toBe(3);
+      expect(matches[0]!.startPos).toEqual({ row: 0, col: 0 });
+      expect(matches[0]!.endPos).toEqual({ row: 0, col: 2 });
     });
 
     it('should detect vertical match of 3', () => {
@@ -52,8 +54,8 @@ describe('MatchDetector', () => {
       const matches = detector.findAllMatches(grid);
 
       expect(matches).toHaveLength(1);
-      expect(matches[0].direction).toBe('vertical');
-      expect(matches[0].length).toBe(3);
+      expect(matches[0]!.direction).toBe('vertical');
+      expect(matches[0]!.length).toBe(3);
     });
 
     it('should detect horizontal match of 4', () => {
@@ -70,7 +72,7 @@ describe('MatchDetector', () => {
       const matches = detector.findAllMatches(grid);
 
       expect(matches).toHaveLength(1);
-      expect(matches[0].length).toBe(4);
+      expect(matches[0]!.length).toBe(4);
     });
 
     it('should detect horizontal match of 5', () => {
@@ -87,7 +89,7 @@ describe('MatchDetector', () => {
       const matches = detector.findAllMatches(grid);
 
       expect(matches).toHaveLength(1);
-      expect(matches[0].length).toBe(5);
+      expect(matches[0]!.length).toBe(5);
     });
 
     it('should detect multiple separate matches', () => {
@@ -194,7 +196,7 @@ describe('MatchDetector', () => {
       const matches = detector.checkPosition(grid, { row: 0, col: 2 });
 
       expect(matches.length).toBeGreaterThan(0);
-      expect(matches[0].tiles.some(t => t.position.row === 0 && t.position.col === 2)).toBe(true);
+      expect(matches[0]!.tiles.some(t => t.position.row === 0 && t.position.col === 2)).toBe(true);
     });
 
     it('should return empty array when position has no matches', () => {

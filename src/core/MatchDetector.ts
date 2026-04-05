@@ -22,8 +22,8 @@ export class MatchDetector {
     for (let row = 0; row < GRID_SIZE; row++) {
       let count = 1;
       for (let col = 1; col <= GRID_SIZE; col++) {
-        const currentTile = col < GRID_SIZE ? grid[row][col] : null;
-        const prevTile = grid[row][col - 1];
+        const currentTile = col < GRID_SIZE ? grid[row]![col] : null;
+        const prevTile = grid[row]![col - 1];
 
         if (currentTile && prevTile && this.isSameType(currentTile, prevTile)) {
           count++;
@@ -31,7 +31,7 @@ export class MatchDetector {
           if (count >= 3) {
             const matchTiles: Tile[] = [];
             for (let i = col - count; i < col; i++) {
-              matchTiles.push(grid[row][i]);
+              matchTiles.push(grid[row]![i]!);
             }
             matches.push({
               tiles: matchTiles,
@@ -50,8 +50,8 @@ export class MatchDetector {
     for (let col = 0; col < GRID_SIZE; col++) {
       let count = 1;
       for (let row = 1; row <= GRID_SIZE; row++) {
-        const currentTile = row < GRID_SIZE ? grid[row][col] : null;
-        const prevTile = grid[row - 1][col];
+        const currentTile = row < GRID_SIZE ? grid[row]![col] : null;
+        const prevTile = grid[row - 1]![col];
 
         if (currentTile && prevTile && this.isSameType(currentTile, prevTile)) {
           count++;
@@ -59,7 +59,7 @@ export class MatchDetector {
           if (count >= 3) {
             const matchTiles: Tile[] = [];
             for (let i = row - count; i < row; i++) {
-              matchTiles.push(grid[i][col]);
+              matchTiles.push(grid[i]![col]!);
             }
             matches.push({
               tiles: matchTiles,
@@ -106,7 +106,7 @@ export class MatchDetector {
   /**
    * 检测特殊模式（4连、5连、T型、L型）
    */
-  public detectSpecialPattern(matches: Match[], grid: Tile[][]): PatternDetectionResult | null {
+  public detectSpecialPattern(matches: Match[], _grid: Tile[][]): PatternDetectionResult | null {
     // 先检查是否有5连
     const match5 = matches.find(m => m.length >= 5);
     if (match5) {
@@ -174,8 +174,8 @@ export class MatchDetector {
     if (direction === 'horizontal') {
       let count = 1;
       for (let col = 1; col <= GRID_SIZE; col++) {
-        const currentTile = col < GRID_SIZE ? grid[index][col] : null;
-        const prevTile = grid[index][col - 1];
+        const currentTile = col < GRID_SIZE ? grid[index]![col] : null;
+        const prevTile = grid[index]![col - 1];
 
         if (currentTile && prevTile && this.isSameType(currentTile, prevTile)) {
           count++;
@@ -183,7 +183,7 @@ export class MatchDetector {
           if (count >= 3) {
             const matchTiles: Tile[] = [];
             for (let i = col - count; i < col; i++) {
-              matchTiles.push(grid[index][i]);
+              matchTiles.push(grid[index]![i]!);
             }
             matches.push({
               tiles: matchTiles,
@@ -199,8 +199,8 @@ export class MatchDetector {
     } else {
       let count = 1;
       for (let row = 1; row <= GRID_SIZE; row++) {
-        const currentTile = row < GRID_SIZE ? grid[row][index] : null;
-        const prevTile = grid[row - 1][index];
+        const currentTile = row < GRID_SIZE ? grid[row]![index] : null;
+        const prevTile = grid[row - 1]![index];
 
         if (currentTile && prevTile && this.isSameType(currentTile, prevTile)) {
           count++;
@@ -208,7 +208,7 @@ export class MatchDetector {
           if (count >= 3) {
             const matchTiles: Tile[] = [];
             for (let i = row - count; i < row; i++) {
-              matchTiles.push(grid[i][index]);
+              matchTiles.push(grid[i]![index]!);
             }
             matches.push({
               tiles: matchTiles,
@@ -230,7 +230,7 @@ export class MatchDetector {
    * 获取匹配的中心位置
    */
   private getCenterPosition(match: Match): GridPosition {
-    const { startPos, endPos, direction, length } = match;
+    const { startPos, direction, length } = match;
     if (direction === 'horizontal') {
       return { row: startPos.row, col: startPos.col + Math.floor(length / 2) };
     } else {

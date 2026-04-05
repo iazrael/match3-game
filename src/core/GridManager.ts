@@ -62,7 +62,8 @@ export class GridManager extends GameEventEmitter {
     if (!this.isValidPosition(pos)) {
       return null;
     }
-    return this.grid[pos.row][pos.col];
+    const tile = this.grid[pos.row]![pos.col];
+    return tile === undefined ? null : tile;
   }
 
   /**
@@ -70,7 +71,7 @@ export class GridManager extends GameEventEmitter {
    */
   public setTile(pos: GridPosition, tile: Tile | null): void {
     if (this.isValidPosition(pos)) {
-      this.grid[pos.row][pos.col] = tile;
+      this.grid[pos.row]![pos.col] = tile;
       if (tile) {
         tile.position = pos;
       }
@@ -125,8 +126,8 @@ export class GridManager extends GameEventEmitter {
     this.setTile(pos2, tile1);
 
     // 检查是否形成匹配
-    const matches1 = this.matchDetector.checkPosition(this.grid, pos1);
-    const matches2 = this.matchDetector.checkPosition(this.grid, pos2);
+    const matches1 = this.matchDetector.checkPosition(this.grid as Tile[][], pos1);
+    const matches2 = this.matchDetector.checkPosition(this.grid as Tile[][], pos2);
     const allMatches = [...matches1, ...matches2];
 
     // 去重匹配（可能同一个匹配被两个位置都检测到）
@@ -141,7 +142,7 @@ export class GridManager extends GameEventEmitter {
 
     // 检测特殊模式
     const specialCreations: SpecialCreation[] = [];
-    const specialPattern = this.matchDetector.detectSpecialPattern(uniqueMatches, this.grid);
+    const specialPattern = this.matchDetector.detectSpecialPattern(uniqueMatches, this.grid as Tile[][]);
 
     if (specialPattern) {
       const specialType = this.getSpecialTypeFromPattern(specialPattern.pattern);
@@ -209,7 +210,9 @@ export class GridManager extends GameEventEmitter {
     }
 
     for (const key of toRemove) {
-      const [row, col] = key.split('-').map(Number);
+      const parts = key.split('-').map(Number);
+      const row = parts[0]!;
+      const col = parts[1]!;
       this.setTile({ row, col }, null);
     }
 
@@ -268,7 +271,7 @@ export class GridManager extends GameEventEmitter {
 
     for (let row = 0; row < GRID_SIZE; row++) {
       for (let col = 0; col < GRID_SIZE; col++) {
-        const tile = this.grid[row][col];
+        const tile = this.grid[row]![col];
         if (tile) {
           tiles.push(tile);
         }
@@ -278,7 +281,7 @@ export class GridManager extends GameEventEmitter {
     // Fisher-Yates 洗牌算法
     for (let i = tiles.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
-      [tiles[i], tiles[j]] = [tiles[j], tiles[i]];
+      [tiles[i]!, tiles[j]!] = [tiles[j]!, tiles[i]!];
     }
 
     // 重新放置
@@ -286,9 +289,9 @@ export class GridManager extends GameEventEmitter {
     for (let row = 0; row < GRID_SIZE; row++) {
       for (let col = 0; col < GRID_SIZE; col++) {
         if (index < tiles.length) {
-          const tile = tiles[index];
+          const tile = tiles[index]!;
           tile.position = { row, col };
-          this.grid[row][col] = tile;
+          this.grid[row]![col] = tile;
           index++;
         }
       }
@@ -303,13 +306,13 @@ export class GridManager extends GameEventEmitter {
 
     for (let row = 0; row < GRID_SIZE; row++) {
       for (let col = 0; col < GRID_SIZE; col++) {
-        if (this.grid[row][col] === null) {
+        if (this.grid[row]![col] === null) {
           const tile: Tile = {
             type: Math.floor(Math.random() * 6) as TileType,
             special: SpecialType.NONE,
             position: { row, col },
           };
-          this.grid[row][col] = tile;
+          this.grid[row]![col] = tile;
           filledPositions.push({ row, col });
         }
       }
@@ -324,7 +327,7 @@ export class GridManager extends GameEventEmitter {
   public createMatchPattern(startRow: number, startCol: number, length: number, type: TileType): void {
     for (let i = 0; i < length; i++) {
       if (startCol + i < GRID_SIZE) {
-        this.grid[startRow][startCol + i] = {
+        this.grid[startRow]![startCol + i] = {
           type,
           special: SpecialType.NONE,
           position: { row: startRow, col: startCol + i },

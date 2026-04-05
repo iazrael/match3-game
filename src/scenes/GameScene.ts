@@ -4,7 +4,7 @@ import { GameStateMachine, GameState } from '../core/GameStateMachine';
 import { ScoreManager } from '../core/ScoreManager';
 import { GravityEngine } from '../core/GravityEngine';
 import { WebAudioSynthesizer } from '../audio/WebAudioSynthesizer';
-import { Tile, GridPosition, TileType, SpecialType, GRID_SIZE } from '../types';
+import { GridPosition, TileType, SpecialType, GRID_SIZE, Tile } from '../types';
 
 /**
  * 游戏主场景 - 消消乐核心玩法
@@ -93,7 +93,7 @@ export class GameScene extends Phaser.Scene {
         container.setSize(this.TILE_SIZE, this.TILE_SIZE);
         container.setInteractive();
 
-        this.tileSprites[row][col] = container;
+        this.tileSprites[row]![col] = container;
       }
     }
   }
@@ -177,7 +177,7 @@ export class GameScene extends Phaser.Scene {
       row.some((tile, c) => {
         if (!tile) return false;
         const matches = this.gridManager['matchDetector'].checkPosition(
-          this.gridManager.getGrid(),
+          this.gridManager.getGrid() as Tile[][],
           { row: r, col: c }
         );
         return matches.length > 0;
@@ -305,7 +305,7 @@ export class GameScene extends Phaser.Scene {
     this.updateBoardDisplay();
 
     // 检查是否有新的匹配
-    const matches = this.gridManager['matchDetector'].findAllMatches(grid);
+    const matches = this.gridManager['matchDetector'].findAllMatches(grid as Tile[][]);
 
     if (matches.length > 0) {
       this.stateMachine.transition(GameState.CASCADE);
@@ -327,8 +327,8 @@ export class GameScene extends Phaser.Scene {
    */
   private async animateSwap(pos1: GridPosition, pos2: GridPosition): Promise<void> {
     return new Promise(resolve => {
-      const sprite1 = this.tileSprites[pos1.row][pos1.col];
-      const sprite2 = this.tileSprites[pos2.row][pos2.col];
+      const sprite1 = this.tileSprites[pos1.row]![pos1.col]!;
+      const sprite2 = this.tileSprites[pos2.row]![pos2.col]!;
 
       const x1 = sprite1.x;
       const y1 = sprite1.y;
@@ -345,9 +345,9 @@ export class GameScene extends Phaser.Scene {
         ease: Phaser.Math.Easing.Quadratic.Out,
         onComplete: () => {
           // 交换容器引用
-          const temp = this.tileSprites[pos1.row][pos1.col];
-          this.tileSprites[pos1.row][pos1.col] = this.tileSprites[pos2.row][pos2.col];
-          this.tileSprites[pos2.row][pos2.col] = temp;
+          const temp = this.tileSprites[pos1.row]![pos1.col]!;
+          this.tileSprites[pos1.row]![pos1.col] = this.tileSprites[pos2.row]![pos2.col]!;
+          this.tileSprites[pos2.row]![pos2.col] = temp;
           resolve();
         },
       });
@@ -371,8 +371,10 @@ export class GameScene extends Phaser.Scene {
       const targets: Phaser.GameObjects.Container[] = [];
 
       for (const key of toRemove) {
-        const [row, col] = key.split('-').map(Number);
-        const container = this.tileSprites[row][col];
+        const parts = key.split('-').map(Number);
+        const row = parts[0]!;
+        const col = parts[1]!;
+        const container = this.tileSprites[row]![col];
         if (container) {
           targets.push(container);
         }
@@ -397,7 +399,7 @@ export class GameScene extends Phaser.Scene {
       const tweens: Phaser.Tweens.Tween[] = [];
 
       for (const movement of result.movements) {
-        const container = this.tileSprites[movement.to.row][movement.to.col];
+        const container = this.tileSprites[movement.to.row]![movement.to.col]!;
 
         if (movement.isNew) {
           container.setScale(0);
@@ -436,8 +438,8 @@ export class GameScene extends Phaser.Scene {
 
     for (let row = 0; row < GRID_SIZE; row++) {
       for (let col = 0; col < GRID_SIZE; col++) {
-        const container = this.tileSprites[row][col];
-        const tile = grid[row][col];
+        const container = this.tileSprites[row]![col]!;
+        const tile = grid[row]![col];
 
         container.removeAll();
 

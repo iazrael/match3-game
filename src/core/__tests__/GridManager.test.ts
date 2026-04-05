@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from 'vitest';
 import { GridManager } from '../GridManager';
-import { TileType, SpecialType, GridPosition, Tile, Match } from '../../types';
+import { TileType, SpecialType, Tile, Match } from '../../types';
 
 describe('GridManager', () => {
   let gridManager: GridManager;
@@ -24,14 +24,14 @@ describe('GridManager', () => {
       const manager = new GridManager();
       expect(manager.getGrid()).toBeDefined();
       expect(manager.getGrid().length).toBe(6);
-      expect(manager.getGrid()[0].length).toBe(6);
+      expect(manager.getGrid()[0]!.length).toBe(6);
     });
 
     it('should initialize with provided grid', () => {
       const manager = new GridManager(testGrid);
       const grid = manager.getGrid();
-      expect(grid[0][0]?.type).toBe(TileType.RED);
-      expect(grid[5][5]?.type).toBe(TileType.ORANGE);
+      expect(grid[0]![0]!.type).toBe(TileType.RED);
+      expect(grid[5]![5]!.type).toBe(TileType.ORANGE);
     });
   });
 
@@ -75,7 +75,7 @@ describe('GridManager', () => {
     });
 
     it('should return null for empty position', () => {
-      testGrid[0][0] = null;
+      testGrid[0]![0] = null;
       gridManager.setGrid(testGrid);
       const tile = gridManager.getTile({ row: 0, col: 0 });
       expect(tile).toBeNull();
@@ -243,9 +243,9 @@ describe('GridManager', () => {
       const matches: Match[] = [
         {
           tiles: [
-            testGrid[0][0]!,
-            testGrid[0][1]!,
-            testGrid[0][2]!,
+            testGrid[0]![0]!,
+            testGrid[0]![1]!,
+            testGrid[0]![2]!,
           ],
           direction: 'horizontal',
           length: 3,
@@ -264,7 +264,7 @@ describe('GridManager', () => {
     it('should emit matches-removed event', () => {
       const matches: Match[] = [
         {
-          tiles: [testGrid[0][0]!, testGrid[0][1]!, testGrid[0][2]!],
+          tiles: [testGrid[0]![0]!, testGrid[0]![1]!, testGrid[0]![2]!],
           direction: 'horizontal',
           length: 3,
           startPos: { row: 0, col: 0 },
@@ -328,7 +328,7 @@ describe('GridManager', () => {
       let hasChanged = false;
       for (let row = 0; row < 6; row++) {
         for (let col = 0; col < 6; col++) {
-          if (gridManager.getGrid()[row][col]?.type !== originalGrid[row][col]?.type) {
+          if (gridManager.getGrid()[row]![col]?.type !== originalGrid[row]![col]?.type) {
             hasChanged = true;
             break;
           }
@@ -358,9 +358,9 @@ describe('GridManager', () => {
 
   describe('fillEmptyWithRandom', () => {
     it('should fill null positions with random tiles', () => {
-      testGrid[0][0] = null;
-      testGrid[0][1] = null;
-      testGrid[1][0] = null;
+      testGrid[0]![0] = null;
+      testGrid[0]![1] = null;
+      testGrid[1]![0] = null;
       gridManager.setGrid(testGrid);
 
       gridManager.fillEmptyWithRandom();
@@ -371,7 +371,7 @@ describe('GridManager', () => {
     });
 
     it('should emit filled event', () => {
-      testGrid[0][0] = null;
+      testGrid[0]![0] = null;
       gridManager.setGrid(testGrid);
 
       let eventFired = false;

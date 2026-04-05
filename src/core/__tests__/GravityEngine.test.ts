@@ -1,17 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import { GravityEngine } from '../GravityEngine';
-import { Tile, TileType, GRID_SIZE } from '../../types';
+import { Tile, TileType, GRID_SIZE, SpecialType } from '../../types';
 
 describe('GravityEngine', () => {
   const createTestGrid = (layout: (TileType | null)[][]): (Tile | null)[][] => {
     const grid: (Tile | null)[][] = [];
     for (let row = 0; row < layout.length; row++) {
       grid[row] = [];
-      for (let col = 0; col < layout[row].length; col++) {
-        const type = layout[row][col];
-        grid[row][col] = type !== null
-          ? { type, special: 'none', position: { row, col } }
-          : null;
+      for (let col = 0; col < layout[row]!.length; col++) {
+        const type = layout[row]![col];
+        if (type !== null) {
+          grid[row]![col] = { type: type as TileType, special: SpecialType.NONE, position: { row, col } };
+        } else {
+          grid[row]![col] = null;
+        }
       }
     }
     return grid;
@@ -53,8 +55,8 @@ describe('GravityEngine', () => {
       for (let i = 0; i < GRID_SIZE; i++) {
         grid[i] = [null, null, null, null, null, null];
       }
-      grid[0][0] = { type: 0, special: 'none', position: { row: 0, col: 0 } };
-      grid[1][0] = { type: 2, special: 'none', position: { row: 1, col: 0 } };
+      grid[0]![0] = { type: 0, special: SpecialType.NONE, position: { row: 0, col: 0 } };
+      grid[1]![0] = { type: 2, special: SpecialType.NONE, position: { row: 1, col: 0 } };
 
       const engine = new GravityEngine();
       const result = engine.applyGravity(grid);
@@ -90,8 +92,8 @@ describe('GravityEngine', () => {
       for (let i = 0; i < GRID_SIZE; i++) {
         grid[i] = [null, null, null, null, null, null];
       }
-      grid[0][0] = { type: 0, special: 'none', position: { row: 0, col: 0 } };
-      grid[2][0] = { type: 1, special: 'none', position: { row: 2, col: 0 } };
+      grid[0]![0] = { type: 0, special: SpecialType.NONE, position: { row: 0, col: 0 } };
+      grid[2]![0] = { type: 1, special: SpecialType.NONE, position: { row: 2, col: 0 } };
 
       const engine = new GravityEngine();
       const result = engine.applyGravity(grid);
@@ -114,9 +116,9 @@ describe('GravityEngine', () => {
       for (let i = 0; i < GRID_SIZE; i++) {
         grid[i] = [null, null, null, null, null, null];
       }
-      grid[0][0] = { type: 0, special: 'none', position: { row: 0, col: 0 } };
-      grid[0][1] = { type: 1, special: 'none', position: { row: 0, col: 1 } };
-      grid[0][2] = { type: 2, special: 'none', position: { row: 0, col: 2 } };
+      grid[0]![0] = { type: 0, special: SpecialType.NONE, position: { row: 0, col: 0 } };
+      grid[0]![1] = { type: 1, special: SpecialType.NONE, position: { row: 0, col: 1 } };
+      grid[0]![2] = { type: 2, special: SpecialType.NONE, position: { row: 0, col: 2 } };
 
       const engine = new GravityEngine();
       const result = engine.applyGravity(grid);
@@ -140,9 +142,9 @@ describe('GravityEngine', () => {
       for (let i = 0; i < GRID_SIZE; i++) {
         grid[i] = [null, null, null, null, null, null];
       }
-      grid[0][0] = { type: 0, special: 'none', position: { row: 0, col: 0 } };
-      grid[2][0] = { type: 1, special: 'none', position: { row: 2, col: 0 } };
-      grid[5][0] = { type: 2, special: 'none', position: { row: 5, col: 0 } };
+      grid[0]![0] = { type: 0, special: SpecialType.NONE, position: { row: 0, col: 0 } };
+      grid[2]![0] = { type: 1, special: SpecialType.NONE, position: { row: 2, col: 0 } };
+      grid[5]![0] = { type: 2, special: SpecialType.NONE, position: { row: 5, col: 0 } };
 
       const engine = new GravityEngine();
       const result = engine.applyGravity(grid);
