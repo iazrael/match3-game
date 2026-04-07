@@ -45,20 +45,80 @@
   "hotPaths": [
     {
       "path": "src/core/__tests__/GravityEngine.test.ts",
-      "accessCount": 8,
-      "lastAccessed": 1775391943104,
+      "accessCount": 21,
+      "lastAccessed": 1775396192886,
+      "type": "file"
+    },
+    {
+      "path": "src/scenes/GameScene.ts",
+      "accessCount": 16,
+      "lastAccessed": 1775396158809,
+      "type": "file"
+    },
+    {
+      "path": "src/core/__tests__/GridManager.test.ts",
+      "accessCount": 15,
+      "lastAccessed": 1775396187025,
+      "type": "file"
+    },
+    {
+      "path": "src/core/GridManager.ts",
+      "accessCount": 14,
+      "lastAccessed": 1775396127269,
       "type": "file"
     },
     {
       "path": "src/core/__tests__/MatchDetector.test.ts",
-      "accessCount": 4,
-      "lastAccessed": 1775391949183,
+      "accessCount": 13,
+      "lastAccessed": 1775396166751,
+      "type": "file"
+    },
+    {
+      "path": "src/core/GravityEngine.ts",
+      "accessCount": 9,
+      "lastAccessed": 1775396127023,
+      "type": "file"
+    },
+    {
+      "path": "src/core/MatchDetector.ts",
+      "accessCount": 9,
+      "lastAccessed": 1775396140737,
+      "type": "file"
+    },
+    {
+      "path": "src/core/__tests__/GameStateMachine.test.ts",
+      "accessCount": 8,
+      "lastAccessed": 1775393475026,
+      "type": "file"
+    },
+    {
+      "path": "src/core/GameEventEmitter.ts",
+      "accessCount": 5,
+      "lastAccessed": 1775396086114,
+      "type": "file"
+    },
+    {
+      "path": "src/types/index.ts",
+      "accessCount": 3,
+      "lastAccessed": 1775396051289,
       "type": "file"
     },
     {
       "path": "vite.config.ts",
       "accessCount": 2,
       "lastAccessed": 1775391898974,
+      "type": "file"
+    },
+    {
+      "path": "src/core/GameStateMachine.ts",
+      "accessCount": 2,
+      "lastAccessed": 1775393483826,
+      "type": "file"
+    },
+    {
+      "path": "src/core/__tests__/ScoreManager.test.ts",
+      "accessCount": 2,
+      "lastAccessed": 1775393528264,
       "type": "file"
     },
     {
@@ -86,33 +146,9 @@
       "type": "file"
     },
     {
-      "path": "src/types/index.ts",
-      "accessCount": 1,
-      "lastAccessed": 1775391844969,
-      "type": "file"
-    },
-    {
-      "path": "src/core/MatchDetector.ts",
-      "accessCount": 1,
-      "lastAccessed": 1775391876277,
-      "type": "file"
-    },
-    {
-      "path": "src/core/GravityEngine.ts",
-      "accessCount": 1,
-      "lastAccessed": 1775391892065,
-      "type": "file"
-    },
-    {
       "path": "src/main.ts",
       "accessCount": 1,
       "lastAccessed": 1775391962135,
-      "type": "file"
-    },
-    {
-      "path": "src/scenes/GameScene.ts",
-      "accessCount": 1,
-      "lastAccessed": 1775391962385,
       "type": "file"
     },
     {
@@ -126,6 +162,24 @@
       "accessCount": 1,
       "lastAccessed": 1775391962877,
       "type": "file"
+    },
+    {
+      "path": "src/core/ScoreManager.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775393521738,
+      "type": "file"
+    },
+    {
+      "path": "src/audio/WebAudioSynthesizer.ts",
+      "accessCount": 1,
+      "lastAccessed": 1775393550097,
+      "type": "file"
+    },
+    {
+      "path": "src",
+      "accessCount": 1,
+      "lastAccessed": 1775396048196,
+      "type": "directory"
     }
   ],
   "userDirectives": []
